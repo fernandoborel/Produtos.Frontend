@@ -1,8 +1,17 @@
+"use client";
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+
 export default function Home() {
   return (
-    <div>
-      <h1>Produtos</h1>
-      <p>Estoque de produtos</p>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </Router>
   );
 }
