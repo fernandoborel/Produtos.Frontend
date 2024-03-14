@@ -10,30 +10,29 @@ const Login = () =>{
 
     const navigate = useNavigate();
 
-    const handleSubmit =(e: any)=>{
-        e.preventDefault();
-        
-        setErro([]);
-        
-
-        axios.post(`${config.apiUrl}/auth/autenticar`,{
-            login,
-            senha
-        }).then((response)=>{
-            console.log(response.data);
-
-            setLogin("");
-            setSenha("");
-
-            localStorage.setItem(config.userAuth, JSON.stringify(response.data));
-
-            //redirecionar para a página de produtos
-            navigate('/principal');
-        }).catch((error)=>{
-            console.log(error.response.data.errors);
-            setErro(error.response.data.errors);
-        });
-    };
+    const handleSubmit = (e: any) => {
+      e.preventDefault();
+      setErro([]);
+  
+      axios.post(`${config.apiUrl}/auth/autenticar`, {
+          login,
+          senha
+      }).then((response) => {
+          console.log(response.data);
+  
+          const { accessToken } = response.data.model;
+  
+          // Salvar o token no LocalStorage
+          localStorage.setItem('accessToken', accessToken);
+  
+          // Redirecionar para a página de produtos
+          navigate('/principal');
+      }).catch((error) => {
+          console.log(error.response.data.errors);
+          setErro(error.response.data.errors);
+      });
+  };
+  
 
     return (
         <div className="row mt-5">
