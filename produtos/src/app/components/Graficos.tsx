@@ -13,35 +13,46 @@ const Categorias = () => {
 
   const fetchCategorias = async () => {
     try {
-        const token = getTokenFromLocalStorage(); // Obter token de autenticação
-        const response = await axios.get(`${config.apiUrl}/produtos/obter-produtos`, {
-            headers: {
-                Authorization: `Bearer ${token}`, // Incluir token no cabeçalho da solicitação
-            },
-        });
-        setCategorias(response.data);
-    } catch (error) {
-        console.error('Error fetching categorias:', error);
-    }
-};
-  
+      const token = getTokenFromLocalStorage();
+      if (!token) {
+        console.error('Token not found in localStorage');
+        return;
+      }
 
-const getTokenFromLocalStorage = () => {
-  return localStorage.getItem('accessToken');
-};
- 
+      const response = await axios.get(`${config.apiUrl}/produtos/obter-produtos`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setCategorias(response.data);
+    } catch (error) {
+      console.error('Error fetching categorias:', error);
+    }
+  };
+
+  const getTokenFromLocalStorage = () => {
+    const userDataString = localStorage.getItem(config.userAuth);
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
+      return userData.accessToken;
+    }
+    return null;
+  };
+  
 
   // Processar os dados para extrair as categorias
   const categoriasLabels = categorias.map(produto => produto.categoria);
 
+  // Processar os dados de ativos/inativos
   const activeLabels = categorias.map(produto => produto.ativo === 1 ? 'Ativo' : 'Inativo');
-  
+
   // Contar o número de ocorrências de cada categoria
   const categoriasCount = categoriasLabels.reduce((acc, categoria) => {
     acc[categoria] = (acc[categoria] || 0) + 1;
     return acc;
   }, {});
 
+  // Contar o número de ocorrências de ativos/inativos
   const activeCount = activeLabels.reduce((acc, ativo) => {
     acc[ativo] = (acc[ativo] || 0) + 1;
     return acc;
