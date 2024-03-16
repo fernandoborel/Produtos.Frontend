@@ -15,22 +15,24 @@ const Login = () =>{
       setErro([]);
   
       axios.post(`${config.apiUrl}/auth/autenticar`, {
-          login,
-          senha
+        login,
+        senha
       }).then((response) => {
-          console.log(response.data);
-  
-          const { accessToken } = response.data.model;
-  
-          // Salvar o token no LocalStorage
-          localStorage.setItem('accessToken', accessToken);
-  
-          // Redirecionar para a página de produtos
-          navigate('/principal');
+        console.log(response.data);
+    
+        const { accessToken, model } = response.data;
+    
+        // Salvar o token e os dados do usuário no LocalStorage
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem(config.userAuth, JSON.stringify(model));
+    
+        // Redirecionar para a página do perfil
+        navigate('/principal');
       }).catch((error) => {
           console.log(error.response.data.errors);
           setErro(error.response.data.errors);
       });
+    
   };
   
 
@@ -58,7 +60,7 @@ const Login = () =>{
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Digite aqui"
+                      placeholder="Digite seu login"
                       value={login}
                       onChange={(e) => setLogin(e.target.value)}
                     />
@@ -68,7 +70,7 @@ const Login = () =>{
                     <input
                       type="password"
                       className="form-control"
-                      placeholder="Digite aqui"
+                      placeholder="Digite sua senha"
                       value={senha}
                       onChange={(e) => setSenha(e.target.value)}
                     />
