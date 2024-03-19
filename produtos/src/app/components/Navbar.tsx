@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Produtos from "./Produtos";
 
 const Navbar = () => {
   const [autenticado, setAutenticado] = useState(false);
@@ -50,6 +51,11 @@ const Navbar = () => {
             <li className="nav-item">
               <Link to="/principal" className="nav-link text-white">
                 Página Principal
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/produtos" className="nav-link text-white">
+                Produtos Disponíveis
               </Link>
             </li>
           </ul>

@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Principal from "./pages/Principal";
+import Produtos from "./components/Produtos";
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/principal" element={<Principal />} />
+        <Route path="/produtos" element={<Produtos />} />
       </Routes>
     </Router>
   );
