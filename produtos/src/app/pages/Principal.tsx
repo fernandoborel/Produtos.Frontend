@@ -1,5 +1,6 @@
 import Profile from '../components/Profile';
 import Graficos from '../components/Graficos';
+import Produtos from '../components/Produtos';
 
 const Principal = () => {
     return (
@@ -9,10 +10,10 @@ const Principal = () => {
             <Profile />
           </div>
           <div className="col-md-6">
-            <Graficos />
+            <Produtos />
           </div>
           <div className="col-md-3">
-            
+            <Graficos />
           </div>
         </div>
       </div>

@@ -43,18 +43,9 @@ const Categorias = () => {
   // Processar os dados para extrair as categorias
   const categoriasLabels = categorias.map(produto => produto.categoria);
 
-  // Processar os dados de ativos/inativos
-  const activeLabels = categorias.map(produto => produto.ativo === 1 ? 'Ativo' : 'Inativo');
-
   // Contar o número de ocorrências de cada categoria
   const categoriasCount = categoriasLabels.reduce((acc, categoria) => {
     acc[categoria] = (acc[categoria] || 0) + 1;
-    return acc;
-  }, {});
-
-  // Contar o número de ocorrências de ativos/inativos
-  const activeCount = activeLabels.reduce((acc, ativo) => {
-    acc[ativo] = (acc[ativo] || 0) + 1;
     return acc;
   }, {});
 
@@ -76,16 +67,6 @@ const Categorias = () => {
     }],
   };
 
-  const active = {
-    labels: Object.keys(activeCount),
-    datasets: [{
-      data: Object.values(activeCount),
-      backgroundColor: [
-        'gray',
-        'black',
-      ],
-    }],
-  }
 
   return (
     <div className='row'>
@@ -94,13 +75,9 @@ const Categorias = () => {
       </div>
       <hr/>
       <br/>
-      <div className='col-md-6'>
+      <div className='col-md-12'>
         <h2>Categorias</h2>
         <Pie data={data} />
-      </div>
-      <div className='col-md-6'>
-        <h2>Ativos / Inativos</h2>
-        <Pie data={active} />
       </div>
     </div>
   );
